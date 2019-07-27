@@ -1,6 +1,6 @@
 # persistant-number
 ##### Find the number with as many multiply operations as can.
-##### Inspired by: https://www.youtube.com/watch?v=E4mrC39sEOQ
+##### Inspired by: https://www.youtube.com/watch?v=Wim9WJeDTHQ and https://www.youtube.com/watch?v=E4mrC39sEOQ
 
 ``344: 3 * 4 * 4 = 48 -> 48: 4 * 8 = 32 -> 32: 3 * 2 = 6 ---> total 3 iterations``
 

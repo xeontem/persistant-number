@@ -1,6 +1,6 @@
 {
   "name": "persistant-number",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "find the number with as many multiply operations as can",
   "main": "index.js",
   "scripts": {
