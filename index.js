@@ -1,24 +1,19 @@
-var logger = x => (console.log(x),x);
-var per = n => innerPer(n)(0)([])(n.toString());
-var visualize = orig => o => d => i => ({ res: o.res * d, vis: `${i > 1 ? `${o.vis} * ` : `[${orig}: ${o.res} * `}${d}${i === orig.length - 1 ? ` = ${o.res*d}]` : ''}` });
-var multiplyer = str => str.split('').reduce((o, d, i) => visualize(str)(o)(d)(i), ({ res: 1, vis: '' }));
-var parse = iterations => iterations.map(iteration => iteration.vis);
-var makeResult = original => steps => iterations => ({ original, steps, iterations });
-var pickRes = obj => obj.res.toString();
-var acc = n => ++n;
-var concat = arr => item => [...arr, item];
-var cond = c => t => f => c ? t() : f();
-var lazy = f => a => () => f(a);
-var eq = x => y => x === y;
-var len = x => x.length;
+const fs = require('fs');
 
-var innerPer = original => steps => iterations => str =>
-  cond(eq(len(str))(1))
-    (lazy(makeResult(original)(steps))(parse(iterations)))
-    (lazy(innerPer(original)(acc(steps))(concat(iterations)(multiplyer(str))))(pickRes(multiplyer(str))));
+// internal dependency
+const { per } = require('./persistant');
 
-try{
-    while(true)per(277)    
-} catch(e) {
-    console.log(e);
-}
+const out = fs.createWriteStream('output.json');
+
+const getNumber = fstNum => countZeros => +`${fstNum}${repeat(countZeros)(0)}`
+const repeat = times => value => Array(times).fill(value).join('');
+
+const PARAMS = { start: 1, end: 2, count: 1 };
+
+const json = Array(getNumber(PARAMS.end - PARAMS.start)(PARAMS.count))
+  .fill(null)
+  .map((_, i) => per(i + getNumber(PARAMS.start)(PARAMS.count)))
+  // .filter(data => data.iterations.length > 3)
+  .sort((a, b) => a.iterations.length > b.iterations.length);
+
+out.write(JSON.stringify(json, null, ' '));
