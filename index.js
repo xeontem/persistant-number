@@ -1,19 +1,20 @@
-const fs = require('fs');
-
-// internal dependency
 const { per } = require('./persistant');
-
-const out = fs.createWriteStream('output.json');
 
 const getNumber = fstNum => countZeros => +`${fstNum}${repeat(countZeros)(0)}`
 const repeat = times => value => Array(times).fill(value).join('');
 
-const PARAMS = { start: 1, end: 2, count: 1 };
+/*
+type ResultData = {
+  original: Number,
+  steps: Number,
+  iterations: List String
+}
+*/
 
-const json = Array(getNumber(PARAMS.end - PARAMS.start)(PARAMS.count))
+// persistRange:: (Number, Number, Number) -> List ResultData
+module.exports.persistRange = (start, end, count) => Array(getNumber(end - start)(count))
   .fill(null)
-  .map((_, i) => per(i + getNumber(PARAMS.start)(PARAMS.count)))
-  // .filter(data => data.iterations.length > 3)
-  .sort((a, b) => a.iterations.length > b.iterations.length);
+  .map((_, i) => per(i + getNumber(start)(count)));
 
-out.write(JSON.stringify(json, null, ' '));
+// persistNumber:: Number -> ResultData
+module.exports.persistNumber = per;
